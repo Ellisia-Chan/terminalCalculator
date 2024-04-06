@@ -1,74 +1,67 @@
 ﻿using System;
 
-namespace Hello_World
-{
-  class Calculator
-  {
-    public int num1;
-    public int num2;
-    public string? op;
-    public double result = 0;
+namespace HelloWorld {
+    class Calculator {
+        private readonly int _num1;
+        private readonly int _num2;
+        private readonly string? _op;
 
-    public Calculator(int _num1, int _num2, string _op)
-    {
-      num1 = _num1;
-      num2 = _num2;
-      op = _op;
-    }
-
-    public double Calculate()
-    {
-      if (op == "/")
-      {
-        if (num1 == 0 || num2 == 0)
-        {
-          Console.WriteLine("Cannot Divide by zero");
-          return 0;
+        public Calculator(int num1, int num2, string? op) {
+            _num1 = num1;
+            _num2 = num2;
+            _op = op;
         }
-        result = (double)num1 / num2;
-      }
-      else
-      {
-        switch (op)
-        {
-          case "+":
-            result = num1 + num2;
-            break;
-          case "-":
-            result = num1 - num2;
-            break;
-          case "x":
-            result = num1 * num2;
-            break;
-          default:
-            Console.WriteLine("Enter a Valid Operator.");
-            return 0;
+
+        public double Calculate() {
+            double result = 0;
+
+            if (_op == null) {
+                Console.WriteLine("Operator cannot be null.");
+                return result;
+            }
+
+            switch (_op) {
+                case "+":
+                    result = _num1 + _num2;
+                    break;
+                case "-":
+                    result = _num1 - _num2;
+                    break;
+                case "x":
+                    result = _num1 * _num2;
+                    break;
+                case "/":
+                    if (_num2 == 0) {
+                        Console.WriteLine("Cannot Divide by zero");
+                        return result;
+                    }
+                    result = (double)_num1 / _num2;
+                    break;
+                default:
+                    Console.WriteLine("Enter a Valid Operator.");
+                    break;
+            }
+            return result;
         }
-      }
-      return result;
     }
-  }
-  class Program
-  {
-    static void Main(string[] args)
-    {
-      //Code Goes Here
-      Console.WriteLine("Calculator");
-      Console.Write("Enter a number: ");
-      int num1 = Convert.ToInt32(Console.ReadLine());
 
-      Console.Write("Enter another number: ");
-      int num2 = Convert.ToInt32(Console.ReadLine());
+    class Program {
+        static void Main(string[] args) {
+            Console.WriteLine("Calculator");
+            Console.Write("Enter a number: ");
+            int num1 = Convert.ToInt32(Console.ReadLine());
 
-      Console.Write("Select Operator [+, -, x, /]: ");
-      string? op = Console.ReadLine();
+            Console.Write("Enter another number: ");
+            int num2 = Convert.ToInt32(Console.ReadLine());
 
-      Calculator cal = new Calculator(num1, num2, op);
-      double result = cal.Calculate();
+            Console.Write("Select Operator [+,-,x,/]: ");
+            string? op = Console.ReadLine();
 
-      Console.WriteLine("The answer is: " + result);
-      // For Closing
-      Console.ReadKey();
+            Calculator cal = new Calculator(num1, num2, op);
+            double result = cal.Calculate();
+
+            Console.WriteLine("The answer is: " + result);
+            Console.ReadKey();
+        }
     }
-  }
 }
